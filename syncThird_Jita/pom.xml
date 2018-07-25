@@ -1,0 +1,254 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.xdja</groupId>
+  <artifactId>syncThird_Jita</artifactId>
+  <version>1.0.0</version>
+  
+  <properties>
+  	<directory>${project.artifactId}</directory>
+  	<java.version>1.7</java.version>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<logback.version>1.1.3</logback.version>
+  	<slf4j.version>1.7.7</slf4j.version>
+  	<fastjson.version>1.2.12</fastjson.version>
+  	<commons.lang3.version>3.1</commons.lang3.version>
+  	<commons.fileupload.version>1.3.2</commons.fileupload.version>
+  	<commons.io.version>1.3.2</commons.io.version>
+  	<httpclient.version>4.5.3</httpclient.version>
+  	<httpmime.version>4.5.3</httpmime.version>
+  	<spring.version>4.2.4.RELEASE</spring.version>
+  	<mango.version>1.5.2.xdja</mango.version>
+  	<ojdbc6.version>11.2.0.3.0</ojdbc6.version>
+      <sqljdbc4.version>4.0</sqljdbc4.version>
+      <mysql.version>5.1.18</mysql.version>
+  	<druid.version>1.0.19</druid.version>
+  	<junit.version>4.12</junit.version>
+  	<easymock.version>3.2</easymock.version>
+	<jackson.version>1.9.3</jackson.version>
+      <pinyin4j.version>2.5.0</pinyin4j.version>
+  </properties>
+  
+ <!-- <scm>
+  	&lt;!&ndash; 格式为： scm:javasvn:工程的SVNURL
+  		只需要设置工程的SVNURL的即可
+  	&ndash;&gt;
+	<connection>scm:javasvn:svn://192.168.9.137/JWTPM/西宁警务通/开发库/demo/pams.main</connection>
+  </scm>-->
+  
+  	<dependencies>
+  	<!-- 日志相关 -->
+  	<dependency>
+  		<groupId>ch.qos.logback</groupId>
+  		<artifactId>logback-classic</artifactId>
+  		<version>${logback.version}</version>	
+  	</dependency>
+  	<dependency>
+  		<groupId>org.slf4j</groupId>
+  		<artifactId>slf4j-api</artifactId>
+  		<version>${slf4j.version}</version>  		
+  	</dependency>
+  	<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>log4j-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+    </dependency>
+    
+    <!-- JSON -->
+    <dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	    <version>${fastjson.version}</version>
+	</dependency>
+	
+	
+	<!-- Spring依赖 -->
+  	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	
+	<!-- commons jar -->
+	<dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons.lang3.version}</version>
+   	</dependency>
+	<dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>${commons.fileupload.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons.io.version}</version>
+    </dependency>
+	
+	<!-- http jar -->
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>${httpclient.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpmime</artifactId>
+		<version>${httpmime.version}</version>
+	</dependency>
+	
+	<!-- mango -->
+	<dependency>
+	    <groupId>org.jfaster</groupId>
+	    <artifactId>mango</artifactId>
+	    <version>${mango.version}</version>
+	    <exclusions>
+			<exclusion>
+	            <groupId>*</groupId>
+	            <artifactId>*</artifactId>
+        	</exclusion>
+		</exclusions>
+	</dependency>
+	
+	<!-- 数据库连接相关 -->
+	<dependency>
+       <groupId>com.oracle</groupId>
+       <artifactId>ojdbc6</artifactId>
+       <version>${ojdbc6.version}</version>
+   </dependency>
+	<dependency>
+	     <groupId>com.alibaba</groupId>
+	     <artifactId>druid</artifactId>
+	     <version>${druid.version}</version>
+	</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>${sqljdbc4.version}</version>
+        </dependency>
+
+        <dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+	<!-- 单元测试 -->
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>${junit.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>${spring.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.easymock</groupId>
+		<artifactId>easymock</artifactId>
+		<version>${easymock.version}</version>
+		<scope>test</scope>
+	</dependency>
+
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>${pinyin4j.version}</version>
+        </dependency>
+    </dependencies>
+	
+  <build>
+	<plugins>
+		<plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-compiler-plugin</artifactId>  
+            <configuration>  
+                <source>${java.version}</source>
+				<target>${java.version}</target>
+				<encoding>${project.build.sourceEncoding}</encoding>
+            </configuration>  
+        </plugin>
+		<!-- <plugin>
+			<groupId>org.codehaus.mojo</groupId>
+	        <artifactId>buildnumber-maven-plugin</artifactId>
+	        <version>1.4</version>
+			<executions>
+				<execution>
+					<phase>validate</phase>
+					<goals>
+						<goal>create</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin> -->
+  		<plugin>
+  			<!-- 设置jar中的MANIFEST.MF -->
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+				<archive>
+					<manifestEntries>
+						<Buildnumber>${buildNumber}</Buildnumber>
+						<Timestamp>${timestamp}</Timestamp>
+					</manifestEntries>
+				</archive>
+			</configuration>
+		</plugin>
+      <!-- 生成MD5 -->
+      <plugin>
+           <groupId>com.xdja.maven</groupId>
+           <artifactId>maven-verify-plugin</artifactId>
+           <version>1.0</version>
+           <configuration>
+           	  <fileTypes>
+           	  	<fileType>jar</fileType>
+           	  	<fileType>war</fileType>
+           	  </fileTypes>
+           </configuration>
+           <executions>
+               <execution>
+                   <id>verify</id>
+                   <phase>package</phase>
+                   <goals>
+                       <goal>verify</goal>
+                   </goals>
+               </execution>
+           </executions>
+       </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<version>2.6</version>
+			<configuration>
+				<appendAssemblyId>false</appendAssemblyId>
+				<descriptors>
+					<descriptor>package-assembly.xml</descriptor>
+				</descriptors>
+			</configuration>
+			<executions>
+				<execution>
+					<id>make-assembly</id>
+					<phase>package</phase>
+					<goals>
+						<goal>single</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+    
+</build>  
+  
+</project>

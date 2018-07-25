@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+		
+	<context:component-scan base-package="com.xdja.syncThird" />
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:application.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置Oracle数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${db.driverClassName}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<!-- druid 连接池的监控
+		<property name="filters" value="stat" />
+		-->
+		<!--maxActive: 最大连接数量 -->
+		<property name="maxActive" value="${db.maxActive}" />
+		<!--initialSize: 初始化连接 -->
+		<property name="initialSize" value="${db.initialSize}" />
+        <property name="testWhileIdle" value="${db.testWhileIdle}"/>
+        <property name="validationQuery" value="${db.validationQuery}"/>
+	</bean>
+
+    <!--吉大数据源-->
+    <bean id="jitaDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${db.jita.driverClassName}" />
+        <property name="url" value="${db.jita.url}" />
+        <property name="username" value="${db.jita.username}" />
+        <property name="password" value="${db.jita.password}" />
+        <!-- druid 连接池的监控
+        <property name="filters" value="stat" />
+        -->
+        <!--maxActive: 最大连接数量 -->
+        <property name="maxActive" value="${db.maxActive}" />
+        <!--initialSize: 初始化连接 -->
+        <property name="initialSize" value="${db.initialSize}" />
+        <property name="testWhileIdle" value="${db.testWhileIdle}"/>
+        <property name="validationQuery" value="${db.jita.validationQuery}"/>
+    </bean>
+
+	<!-- 配置吉大数据源工厂 -->
+    <bean id="jitaDataSourceFactory" class="org.jfaster.mango.datasource.SimpleDataSourceFactory">
+        <property name="name" value="jita"/>
+        <property name="dataSource" ref="jitaDataSource"/>
+    </bean>
+    <!-- 配置Oracle数据源工厂 -->
+    <bean id="oracleDataSourceFactory" class="org.jfaster.mango.datasource.SimpleDataSourceFactory">
+        <property name="name" value="oracle"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+	<!--拦截器配置-->
+	<bean id="interceptorChain" class="org.jfaster.mango.interceptor.InterceptorChain">
+		<property name="interceptors">
+            <list>
+                <!--MySQL分页-->
+                <bean class="com.xdja.syncThird.page.MySQLPageInterceptor"/>
+                <!--Oracle分页-->
+                <bean class="com.xdja.syncThird.page.OraclePageInterceptor"/>
+                <!--SqlServer分页-->
+                <bean class="com.xdja.syncThird.page.SqlServerPageInterceptor"/>
+			</list>
+		</property>
+	</bean>
+
+    <!-- 配置mango对象 -->
+    <bean id="mango" class="org.jfaster.mango.operator.Mango" factory-method="newInstance">
+        <property name="dataSourceFactories">
+            <list>
+                <ref bean="oracleDataSourceFactory" />
+                <ref bean="jitaDataSourceFactory" />
+            </list>
+        </property>
+        <property name="interceptorChain" ref="interceptorChain"/>
+    </bean>
+	<!-- 配置扫描使用@DB注解修饰的DAO类 -->
+    <bean class="org.jfaster.mango.plugin.spring.MangoDaoScanner">
+        <property name="packages">
+            <list>
+                <!-- 扫描包名 -->
+                <value>com.xdja.syncThird.dao</value>
+            </list>
+        </property>
+    </bean>
+
+    
+</beans>
